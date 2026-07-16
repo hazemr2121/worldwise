@@ -24,3 +24,11 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.demoNote {
+  width: 48rem;
+  margin: 8rem auto -6rem;
+  text-align: center;
+  color: var(--color-light--2);
+  font-size: 1.5rem;
+}

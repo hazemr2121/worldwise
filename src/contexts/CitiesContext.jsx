@@ -1,6 +1,8 @@
 import { createContext, useCallback, useContext } from "react";
 import { useEffect, useReducer } from "react";
-const URL = "http://localhost:8000/cities";
+const URL = import.meta.env.DEV
+  ? "http://localhost:8000/cities"
+  : "https://my-json-server.typicode.com/hazemr2121/worldwise/cities";
 
 const CitiesContext = createContext();
 

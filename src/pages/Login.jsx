@@ -22,6 +22,9 @@ export default function Login() {
   return (
     <main className={styles.login}>
       <PageNav />
+      <p className={styles.demoNote}>
+        Demo login — credentials are pre-filled, just click Login.
+      </p>
       <form className={styles.form} onSubmit={handleClick}>
         <div className={styles.row}>
           <label htmlFor="email">Email address</label>

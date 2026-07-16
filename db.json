@@ -1,0 +1,64 @@
+{
+  "cities": [
+    {
+      "cityName": "Lisbon",
+      "country": "Portugal",
+      "emoji": "🇵🇹",
+      "date": "2027-10-31T15:59:59.138Z",
+      "notes": "My favorite city so far!",
+      "position": {
+        "lat": 38.727881642324164,
+        "lng": -9.140900099907554
+      },
+      "id": "73930385"
+    },
+    {
+      "cityName": "Madrid",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2027-07-15T08:22:53.976Z",
+      "notes": "",
+      "position": {
+        "lat": 40.46635901755316,
+        "lng": -3.7133789062500004
+      },
+      "id": "17806751"
+    },
+    {
+      "cityName": "Berlin",
+      "country": "Germany",
+      "emoji": "🇩🇪",
+      "date": "2027-02-12T09:24:11.863Z",
+      "notes": "Amazing 😃",
+      "position": {
+        "lat": 52.53586782505711,
+        "lng": 13.376933665713324
+      },
+      "id": "98443197"
+    },
+    {
+      "id": "7d7a",
+      "cityName": "Pennabilli",
+      "country": "Italy",
+      "emoji": "🇮🇹",
+      "date": "2024-10-11T05:00:16.432Z",
+      "notes": "",
+      "position": {
+        "lat": "43.8503744993026",
+        "lng": "12.282714843750002"
+      }
+    },
+    {
+      "id": "b434",
+      "cityName": "Al Fayyum",
+      "country": "Egypt",
+      "emoji": "🇪🇬",
+      "date": "2024-07-31T07:47:11.000Z",
+      "notes": "كانت جميلة",
+      "position": {
+        "lat": "29.283797147695225",
+        "lng": "30.849713499819295"
+      }
+    }
+  ]
+}
