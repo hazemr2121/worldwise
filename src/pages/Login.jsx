@@ -47,7 +47,9 @@ export default function Login() {
         </div>
 
         <div>
-          <Button type="primary">Login</Button>
+          <Button type="primary" nativeType="submit">
+            Login
+          </Button>
         </div>
       </form>
     </main>

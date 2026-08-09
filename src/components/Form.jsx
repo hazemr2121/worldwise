@@ -70,8 +70,10 @@ function Form() {
       notes,
       position: { lat, lng },
     };
-    await createCity(newCity);
-    navigate("/app/cities");
+    const created = await createCity(newCity);
+    // Only leave the form if the city actually saved, so a failure doesn't
+    // silently drop what was typed.
+    if (created) navigate("/app/cities");
   }
 
   if (!lat || !lng) return <Message message="Click on the map to add a city" />;
@@ -121,7 +123,7 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <Button type="primary" onClick={() => navigate(-1)}>
+        <Button type="primary" nativeType="submit">
           Add
         </Button>
         <BackButton />

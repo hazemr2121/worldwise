@@ -1,8 +1,6 @@
 import { createContext, useCallback, useContext } from "react";
 import { useEffect, useReducer } from "react";
-const URL = import.meta.env.DEV
-  ? "http://localhost:8000/cities"
-  : "https://my-json-server.typicode.com/hazemr2121/worldwise/cities";
+import * as citiesApi from "../services/citiesApi";
 
 const CitiesContext = createContext();
 
@@ -66,8 +64,7 @@ function CitiesProvider({ children }) {
 
     async function fetchCities() {
       try {
-        const res = await fetch(`${URL}`);
-        const data = await res.json();
+        const data = await citiesApi.getCities();
         dispatch({ type: "cities/loaded", payload: data });
       } catch {
         dispatch({
@@ -81,42 +78,42 @@ function CitiesProvider({ children }) {
 
   const getCity = useCallback(
     async function getCity(id) {
-      if (Number(id) === currentCity.id) return;
+      // ids are strings, so compare as strings — Number(id) never matched.
+      if (String(id) === String(currentCity.id)) return;
       dispatch({ type: "loading" });
       try {
-        const res = await fetch(`${URL}/${id}`);
-        const data = await res.json();
+        const data = await citiesApi.getCity(id);
         dispatch({ type: "city/loaded", payload: data });
       } catch {
         dispatch({
           type: "rejected",
-          payload: "There was an error loading the cities...",
+          payload: "There was an error loading the city...",
         });
       }
     },
     [currentCity.id]
   );
+
   async function createCity(newCity) {
     dispatch({ type: "loading" });
     try {
-      const res = await fetch(`${URL}`, {
-        method: "POST",
-        body: JSON.stringify(newCity),
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await res.json();
+      const data = await citiesApi.createCity(newCity);
       dispatch({ type: "city/created", payload: data });
+      return data;
     } catch {
-      alert("There was an error creating the city...");
+      // Previously this alert()ed and left isLoading stuck on, which froze the
+      // form. Surface it through the same error channel as everything else.
+      dispatch({
+        type: "rejected",
+        payload: "There was an error creating the city...",
+      });
     }
   }
 
   async function deleteCity(id) {
     dispatch({ type: "loading" });
     try {
-      await fetch(`${URL}/${id}`, {
-        method: "DELETE",
-      });
+      await citiesApi.deleteCity(id);
       dispatch({ type: "city/deleted", payload: id });
     } catch {
       dispatch({

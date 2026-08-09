@@ -4,9 +4,14 @@ import Spinner from "./Spinner";
 import Message from "./Message";
 import { useCities } from "../contexts/CitiesContext";
 function CityList() {
-  const { cities, isLoading } = useCities();
+  const { cities, isLoading, error } = useCities();
   if (isLoading) {
     return <Spinner />;
+  }
+  // The context tracked an error but nothing ever rendered it, so failures were
+  // invisible once the alert() was removed.
+  if (error) {
+    return <Message message={error} />;
   }
   if (!cities.length) {
     return (

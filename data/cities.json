@@ -59,6 +59,30 @@
         "lat": "29.283797147695225",
         "lng": "30.849713499819295"
       }
+    },
+    {
+      "id": "0f43",
+      "cityName": "Mediterranean Sea",
+      "country": "Algeria",
+      "emoji": "🇩🇿",
+      "date": "2026-07-16T04:46:21.694Z",
+      "notes": "",
+      "position": {
+        "lat": "35.70741104748442",
+        "lng": "-1.2800562272936935"
+      }
+    },
+    {
+      "id": "1eeb",
+      "cityName": "Giza",
+      "country": "Egypt",
+      "emoji": "🇪🇬",
+      "date": "2026-07-16T04:50:27.534Z",
+      "notes": "wow",
+      "position": {
+        "lat": "28.420391085674304",
+        "lng": "29.091796875"
+      }
     }
   ]
 }

@@ -1,7 +1,16 @@
 import styles from "./Button.module.css";
-function Button({ children, onClick, type }) {
+
+// `type` is the visual variant (primary / back / position).
+// `nativeType` is the real HTML button type. It defaults to "button" so a
+// Button dropped inside a form doesn't submit it by accident — forms opt in
+// explicitly with nativeType="submit".
+function Button({ children, onClick, type, nativeType = "button" }) {
   return (
-    <button onClick={onClick} className={`${styles.btn} ${styles[type]}`}>
+    <button
+      type={nativeType}
+      onClick={onClick}
+      className={`${styles.btn} ${styles[type]}`}
+    >
       {children}
     </button>
   );
