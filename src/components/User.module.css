@@ -20,6 +20,22 @@
   height: 4rem;
 }
 
+/* The absolute position overlaps the stacked sidebar on small screens, so it
+   becomes a normal element pinned to the top-right of the shell instead. */
+@media (max-width: 60em) {
+  .user {
+    top: 1.6rem;
+    right: 1.6rem;
+    padding: 0.6rem 1rem;
+    font-size: 1.4rem;
+    gap: 1rem;
+  }
+
+  .user img {
+    height: 3rem;
+  }
+}
+
 .user button {
   background-color: var(--color-dark--2);
   border-radius: 7px;

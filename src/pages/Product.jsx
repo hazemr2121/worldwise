@@ -11,17 +11,18 @@ export default function Product() {
           alt="person with dog overlooking mountain with sunset"
         />
         <div>
-          <h2>About WorldWide.</h2>
+          <h2>About WorldWise.</h2>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo est
-            dicta illum vero culpa cum quaerat architecto sapiente eius non
-            soluta, molestiae nihil laborum, placeat debitis, laboriosam at fuga
-            perspiciatis?
+            Most travel apps want you to plan the next trip. WorldWise is for
+            remembering the last one. Click anywhere on the world map and it
+            works out which city you landed on, then keeps it — with the date
+            you were there and whatever you want to remember about it.
           </p>
           <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis
-            doloribus libero sunt expedita ratione iusto, magni, id sapiente
-            sequi officiis et.
+            Your cities collect into a list and a set of markers you can pan
+            across, grouped by country, so the shape of where you have actually
+            been becomes something you can look at rather than something you
+            half-remember.
           </p>
         </div>
       </section>

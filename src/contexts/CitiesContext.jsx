@@ -1,3 +1,6 @@
+/* eslint-disable react-refresh/only-export-components --
+   Provider and its hook live in one file, which is the conventional React
+   context layout; the cost is that fast refresh reloads this module fully. */
 import { createContext, useCallback, useContext } from "react";
 import { useEffect, useReducer } from "react";
 import * as citiesApi from "../services/citiesApi";

@@ -12,13 +12,7 @@ import Message from "./Message";
 import Spinner from "./Spinner";
 import DatePicker from "react-datepicker";
 import { useCities } from "../contexts/CitiesContext";
-export function convertToEmoji(countryCode) {
-  const codePoints = countryCode
-    .toUpperCase()
-    .split("")
-    .map((char) => 127397 + char.charCodeAt());
-  return String.fromCodePoint(...codePoints);
-}
+import { convertToEmoji } from "../utils/convertToEmoji";
 
 function Form() {
   const [lat, lng] = useUrlPosition();
@@ -29,34 +23,46 @@ function Form() {
   const [date, setDate] = useState(new Date());
   const [notes, setNotes] = useState("");
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
-  const [geocodingError, setGeocodingError] = useState(null);
   const [emoji, setEmoji] = useState("");
+  // "ok" | "not-a-city" | "unavailable" — clicking the ocean is a real dead end,
+  // but the lookup service being down shouldn't stop you adding a city by hand.
+  const [geocodeStatus, setGeocodeStatus] = useState("ok");
 
   useEffect(() => {
     if (!lat || !lng) return;
+    let cancelled = false;
+
     async function fetchCityName() {
       setIsLoadingGeocoding(true);
-      setGeocodingError(null);
+      setGeocodeStatus("ok");
       try {
         const response = await fetch(
           `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
         );
+        if (!response.ok) throw new Error("lookup-failed");
         const data = await response.json();
+        if (cancelled) return;
+
         if (!data.countryCode) {
-          throw new Error(
-            "that doesn't seem to be a city. Click somewhere else 🙂"
-          );
+          setGeocodeStatus("not-a-city");
+          return;
         }
         setCityName(data.city || data.locality || "");
         setCountry(data.countryName);
         setEmoji(convertToEmoji(data.countryCode));
-      } catch (error) {
-        setGeocodingError(error.message);
+      } catch {
+        if (!cancelled) setGeocodeStatus("unavailable");
       } finally {
-        setIsLoadingGeocoding(false);
+        if (!cancelled) setIsLoadingGeocoding(false);
       }
     }
+
     fetchCityName();
+    // Clicking a new spot before the previous lookup lands would otherwise let
+    // the stale response overwrite the newer one.
+    return () => {
+      cancelled = true;
+    };
   }, [lat, lng]);
 
   async function handleSubmit(e) {
@@ -80,13 +86,23 @@ function Form() {
 
   if (isLoadingGeocoding) return <Spinner />;
 
-  if (geocodingError) return <Message message={geocodingError} />;
+  if (geocodeStatus === "not-a-city")
+    return <Message message="That doesn't seem to be a city. Click somewhere else 🙂" />;
 
   return (
     <form
       className={`${styles.form} ${isLoading ? styles.loading : ""}`}
       onSubmit={handleSubmit}
     >
+      {/* A failed lookup used to replace the whole form, leaving no way to add
+          the city at all. Now it just means you type the name yourself. */}
+      {geocodeStatus === "unavailable" && (
+        <p className={styles.notice}>
+          Couldn&apos;t look up this location automatically — type the city name
+          in yourself and it will save fine.
+        </p>
+      )}
+
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input

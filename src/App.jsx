@@ -8,7 +8,7 @@ const Homepage = lazy(() => import("./pages/Homepage"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const Product = lazy(() => import("./pages/Product"));
 const PageNotFound = lazy(() => import("./pages/PageNotFound"));
-const AppLayount = lazy(() => import("./pages/AppLayout"));
+const AppLayout = lazy(() => import("./pages/AppLayout"));
 const Login = lazy(() => import("./pages/Login"));
 
 import CityList from "./components/CityList";
@@ -32,7 +32,7 @@ function App() {
                 path="/app"
                 element={
                   <ProtectedRoute>
-                    <AppLayount />
+                    <AppLayout />
                   </ProtectedRoute>
                 }
               >

@@ -8,14 +8,13 @@
 .form {
   background-color: var(--color-dark--2);
   border-radius: 7px;
-  padding: 2rem 3rem;
-  width: 100%;
+  padding: 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
 
-  /* Different from other form */
   width: 48rem;
+  max-width: 100%;
   margin: 8rem auto;
 }
 
@@ -26,9 +25,35 @@
 }
 
 .demoNote {
-  width: 48rem;
-  margin: 8rem auto -6rem;
-  text-align: center;
-  color: var(--color-light--2);
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: var(--color-dark--1);
+  background-color: var(--color-brand--2);
+  border-radius: 5px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.error {
   font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-brand--1);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 40em) {
+  .login {
+    margin: 1rem;
+    padding: 2rem 1.5rem;
+    min-height: calc(100vh - 2rem);
+  }
+
+  .form {
+    margin: 4rem auto;
+    padding: 2rem;
+  }
 }

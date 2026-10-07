@@ -51,9 +51,11 @@ function Map() {
         scrollWheelZoom={true}
         className={styles.map}
       >
+        {/* Main OSM tile servers — the previous .fr/hot mirror is rate-limited
+            and often slow to paint, which is a bad look during a demo. */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {cities.map((city) => (
           <Marker
@@ -76,21 +78,24 @@ function Map() {
 
 function ChangeCenter({ position }) {
   const map = useMap();
-  map.setView(position);
+  // setView is a side effect, so it belongs in an effect rather than in the
+  // render body where it ran on every single render.
+  useEffect(() => {
+    map.setView(position);
+  }, [map, position]);
   return null;
 }
 
 function DetectClick() {
   const navigate = useNavigate();
 
-  useMapEvents(
-    {
-      click: (e) => {
-        navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
-      },
+  useMapEvents({
+    click: (e) => {
+      navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
     },
-    []
-  );
+  });
+
+  return null;
 }
 
 export default Map;

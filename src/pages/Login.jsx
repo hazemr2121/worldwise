@@ -2,35 +2,42 @@ import { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import PageNav from "../components/PageNav";
 import { useAuth } from "../contexts/fakeAuthContext";
+import { DEMO_USER } from "../constants/demo";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 
 export default function Login() {
-  const { login, isAuthenticated } = useAuth();
-  // PRE-FILL FOR DEV PURPOSES
-  const [email, setEmail] = useState("jack@example.com");
-  const [password, setPassword] = useState("qwerty");
+  const { login, isAuthenticated, error } = useAuth();
+  // Pre-filled so a visitor can get straight into the demo.
+  const [email, setEmail] = useState(DEMO_USER.email);
+  const [password, setPassword] = useState(DEMO_USER.password);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (isAuthenticated) navigate("/app", { replace: true });
   }, [isAuthenticated, navigate]);
 
-  function handleClick(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     if (email && password) login(email, password);
   }
+
   return (
     <main className={styles.login}>
       <PageNav />
-      <p className={styles.demoNote}>
-        Demo login — credentials are pre-filled, just click Login.
-      </p>
-      <form className={styles.form} onSubmit={handleClick}>
+
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <p className={styles.demoNote}>
+          This is a demo — the credentials are already filled in, just press
+          Login.
+        </p>
+
         <div className={styles.row}>
           <label htmlFor="email">Email address</label>
           <input
             type="email"
             id="email"
+            autoComplete="username"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
@@ -41,12 +48,19 @@ export default function Login() {
           <input
             type="password"
             id="password"
+            autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
         </div>
 
-        <div>
+        {error && (
+          <p className={styles.error} role="alert">
+            {error}
+          </p>
+        )}
+
+        <div className={styles.actions}>
           <Button type="primary" nativeType="submit">
             Login
           </Button>

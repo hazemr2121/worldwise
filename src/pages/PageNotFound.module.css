@@ -1,0 +1,51 @@
+.notFound {
+  margin: 2.5rem;
+  padding: 2.5rem 5rem;
+  background-color: var(--color-dark--1);
+  min-height: calc(100vh - 5rem);
+}
+
+.notFound section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.6rem;
+  min-height: 60vh;
+}
+
+.code {
+  font-size: 9rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-brand--2);
+}
+
+.notFound h1 {
+  font-size: 3.2rem;
+  line-height: 1.2;
+}
+
+.text {
+  font-size: 1.7rem;
+  color: var(--color-light--1);
+  max-width: 46rem;
+  margin-bottom: 1.6rem;
+}
+
+@media (max-width: 40em) {
+  .notFound {
+    margin: 1rem;
+    padding: 2rem 1.5rem;
+    min-height: calc(100vh - 2rem);
+  }
+
+  .code {
+    font-size: 6.4rem;
+  }
+
+  .notFound h1 {
+    font-size: 2.4rem;
+  }
+}

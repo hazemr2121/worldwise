@@ -27,6 +27,15 @@
   font-size: 2.8rem;
 }
 
+.notice {
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: var(--color-dark--1);
+  background-color: var(--color-brand--1);
+  border-radius: 5px;
+  padding: 1rem 1.4rem;
+}
+
 .form.loading {
   opacity: 0.3;
 }

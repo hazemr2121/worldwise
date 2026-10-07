@@ -4,9 +4,12 @@ import Message from "./Message";
 import CountryItem from "./CountryItem";
 import { useCities } from "../contexts/CitiesContext";
 function CountryList() {
-  const { cities, isLoading } = useCities();
+  const { cities, isLoading, error } = useCities();
   if (isLoading) {
     return <Spinner />;
+  }
+  if (error) {
+    return <Message message={error} />;
   }
   if (!cities.length) {
     return (

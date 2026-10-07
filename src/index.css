@@ -55,6 +55,11 @@ input:focus {
   background-color: #fff;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .cta:link,
 .cta:visited {
   display: inline-block;

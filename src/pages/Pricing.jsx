@@ -2,7 +2,7 @@
 import PageNav from "../components/PageNav";
 import styles from "./Product.module.css";
 
-export default function Product() {
+export default function Pricing() {
   return (
     <main className={styles.product}>
       <PageNav />
@@ -14,9 +14,14 @@ export default function Product() {
             Just $9/month.
           </h2>
           <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae vel
-            labore mollitia iusto. Recusandae quos provident, laboriosam fugit
-            voluptatem iste.
+            One plan, everything included: unlimited cities, the full world map,
+            country grouping and your notes on every trip. No usage tiers and
+            nothing held back for an upgrade prompt.
+          </p>
+          <p>
+            This is a portfolio demo, so nothing is actually charged — the
+            pricing page is here to show the full marketing flow alongside the
+            app itself.
           </p>
         </div>
         <img src="img-2.jpg" alt="overview of a large city with skyscrapers" />

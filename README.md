@@ -1,97 +1,102 @@
 # WorldWise
-<h2 align="center">
 
-[🌐Live](https://worldwise-murex.vercel.app/)
-</h2>
+A React app for keeping track of the cities you've travelled to. Click anywhere
+on the world map, WorldWise works out which city you landed on, and you save it
+with a date and your notes. Cities collect into a list and a set of map markers,
+grouped by country.
 
-WorldWise is a React application that allows users to explore cities from around the world. It provides information about various cities, including their locations on a map, details about each city, and the ability to create and delete cities.
+**[Live demo](https://worldwise-murex.vercel.app/)** — log in with the
+pre-filled demo credentials on the login page.
+
+## Demo credentials
+
+```
+demo@worldwise.app
+demo1234
+```
 
 ## Features
 
-- View a list of cities and their locations on a map.
-- Click on a city marker to see detailed information about the city.
-- Create a new city by providing its details.
-- Delete a city from the list.
+- Click the map to add a city; the location is reverse-geocoded into a city and
+  country name automatically
+- Browse your cities as a list, or grouped by country
+- Open any city for its date, notes and a link out to Wikipedia
+- Delete cities you didn't mean to add
+- "My position" jumps the map to where you actually are
+- Protected `/app` routes behind a demo login that survives a page refresh
 
-## Prerequisites
+## How data is stored
 
-Before running the WorldWise application, ensure you have the following dependencies installed:
+There is no backend. Cities are seeded from `src/data/cities.json` on first
+load and then persisted to `localStorage`, so everything you add or delete
+survives a reload and the deployed demo is fully interactive without a server to
+run or pay for.
 
-- [Node.js](https://nodejs.org) (version 14 or higher)
+The storage layer lives in `src/services/citiesApi.js` and exposes the same
+async shape a real API client would (`getCities`, `getCity`, `createCity`,
+`deleteCity`), so swapping in a real backend means rewriting that one file.
 
-## Installation
+To wipe any added cities and restore the originals mid-demo, call
+`resetCities()` from that module, or clear the `worldwise:cities:v1` key in
+your browser's local storage.
 
-1. Clone the repository:
+## Tech
+
+- **React 18** — hooks, context, `useReducer` for cities and auth state
+- **React Router 6** — nested and protected routes, lazy-loaded pages
+- **Leaflet** / **react-leaflet** — the world map and markers
+- **Vite** — dev server and build
+- **CSS Modules** — component-scoped styles
+
+## Running locally
+
+Requires Node 18 or newer.
 
 ```shell
-git clone https://github.com/sparkz-technology/worldwise.git
-```
-
-2. Change into the project directory:
-
-```shell
+git clone https://github.com/hazemr2121/worldwise.git
 cd worldwise
-```
-
-3. Install the dependencies:
-
-```shell
 npm install
-```
-
-## Configuration
-
-The WorldWise application uses a JSON server to provide city data. By default, the server is configured to run on `http://localhost:8000`. If you need to change the server URL, modify the `BASE_URL` constant in the `CitiesProvider` component located in `src/providers/CitiesProvider.js`.
-
-## Usage
-
-1. Start the JSON server to serve the city data:
-
-```shell
-npm run server
-```
-
-2. Start the development server:
-
-```shell
 npm run dev
 ```
 
-3. Open your browser and navigate to `http://localhost:3000` to access the WorldWise application.
+Vite prints the local URL when it starts (`http://localhost:5173` by default).
+No separate API server is needed.
 
-## Authentication
+Other scripts:
 
-The WorldWise application includes authentication functionality. You can log in using the following credentials:
+```shell
+npm run build     # production build into dist/
+npm run preview   # serve the production build locally
+npm run lint      # eslint
+```
 
-- Email: `sparkz@worldwise.com`
-- Password: `qwerty`
+## Deploying
 
-## Available Scripts
+The app is a static site — any static host works. `vercel.json` already
+contains the SPA rewrite that sends every path to `index.html`, which is what
+keeps deep links like `/app/cities/73930385` from 404ing on refresh.
 
-In the project directory, you can run the following scripts:
+On Vercel, importing the repository is enough; the framework preset is detected
+and the defaults are correct:
 
-- `npm run dev`: Starts the development server.
-- `npm run build`: Builds the application for production.
-- `npm run lint`: Runs the ESLint linter to check for code quality and style issues.
-- `npm run preview`: Serves the production build locally for preview.
-- `npm run server`: Starts the JSON server to serve city data.
+- Build command: `npm run build`
+- Output directory: `dist`
 
+## External services
 
-## Contributing
+Two public APIs are called from the browser, both without a key:
 
-Contributions are welcome! Feel free to open issues and submit pull requests to help improve the WorldWise application.
+- [BigDataCloud](https://www.bigdatacloud.com/) reverse-geocodes a map click
+  into a city and country. If it's unreachable the form still opens and you can
+  type the city name in by hand.
+- OpenStreetMap serves the map tiles.
 
-## Acknowledgements
+## Notes
 
-The WorldWise application uses the following open-source libraries:
+Authentication is deliberately fake — credentials are checked against a
+constant in `src/contexts/fakeAuthContext.jsx`. It exists to demonstrate
+protected routing, not security.
 
-- [React](https://reactjs.org)
-- [React Router](https://reactrouter.com)
-- [Leaflet](https://leafletjs.com)
-- [React Leaflet](https://react-leaflet.js.org)
-- [React DatePicker](https://github.com/Hacker0x01/react-datepicker)
-- [JSON Server](https://github.com/typicode/json-server)
-- [ESLint](https://eslint.org)
-
-
-Thank you for using WorldWise!
+Built following Jonas Schmedtmann's React course, then extended: the json-server
+backend was replaced with the local persistence layer above, the pages were
+written out properly, and the layout was made responsive.

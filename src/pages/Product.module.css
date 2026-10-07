@@ -32,3 +32,35 @@
 .product section a {
   margin-top: 2rem;
 }
+
+/* The 80rem minimum in the clamp above forces a horizontal scrollbar on
+   anything narrower than a laptop, so below that the two columns collapse. */
+@media (max-width: 84em) {
+  .product section {
+    width: min(90rem, 100%);
+  }
+}
+
+@media (max-width: 60em) {
+  .product {
+    margin: 1rem;
+    padding: 2rem 1.5rem;
+    min-height: calc(100vh - 2rem);
+  }
+
+  .product section {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin: 3rem auto;
+  }
+
+  /* Keep the image below the copy regardless of source order. */
+  .product section img {
+    order: 2;
+  }
+
+  .product h2 {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+  }
+}
