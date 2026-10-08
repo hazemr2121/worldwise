@@ -1,5 +1,4 @@
 import CityItem from "./CityItem";
-import styles from "./CityList.module.css";
 import Spinner from "./Spinner";
 import Message from "./Message";
 import { useCities } from "../contexts/CitiesContext";
@@ -19,7 +18,7 @@ function CityList() {
     );
   }
   return (
-    <ul className={styles.cityList}>
+    <ul className="w-full h-[65vh] list-none overflow-hidden flex flex-col gap-3.5 [&::-webkit-scrollbar]:w-0">
       {cities.map((city) => (
         <CityItem city={city} key={city.id} />
       ))}

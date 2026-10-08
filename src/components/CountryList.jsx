@@ -1,4 +1,3 @@
-import styles from "./CountryList.module.css";
 import Spinner from "./Spinner";
 import Message from "./Message";
 import CountryItem from "./CountryItem";
@@ -24,7 +23,7 @@ function CountryList() {
   }, []);
 
   return (
-    <ul className={styles.countryList}>
+    <ul className="w-full h-[65vh] list-none overflow-y-scroll overflow-x-hidden grid grid-cols-[1fr_1fr] content-start gap-4">
       {countries.map((country) => (
         <CountryItem country={country} key={country.country} />
       ))}

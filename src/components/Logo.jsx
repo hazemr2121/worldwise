@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import styles from "./Logo.module.css";
 
-function Logo() {
+// `className` styles the link; PageNav passes its nav-link look.
+function Logo({ className }) {
   return (
-    <Link to="/">
-      <img src="/logo.png" alt="WorldWise logo" className={styles.logo} />
+    <Link to="/" className={className}>
+      <img src="/logo.png" alt="WorldWise logo" className="h-13" />
     </Link>
   );
 }

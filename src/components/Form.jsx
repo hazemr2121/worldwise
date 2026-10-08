@@ -3,7 +3,6 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { useEffect, useState } from "react";
 
-import styles from "./Form.module.css";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 import BackButton from "./BackButton";
@@ -13,6 +12,12 @@ import Spinner from "./Spinner";
 import DatePicker from "react-datepicker";
 import { useCities } from "../contexts/CitiesContext";
 import { convertToEmoji } from "../utils/convertToEmoji";
+
+const rowClass = "flex flex-col gap-1.25 relative";
+
+// While saving, the whole form fades and its buttons go inert and grey.
+const loadingClass =
+  "opacity-30 [&_button]:pointer-events-none [&_button]:bg-light-1 [&_button]:border [&_button]:border-solid [&_button]:border-light-1 [&_button]:text-dark-0";
 
 function Form() {
   const [lat, lng] = useUrlPosition();
@@ -91,29 +96,31 @@ function Form() {
 
   return (
     <form
-      className={`${styles.form} ${isLoading ? styles.loading : ""}`}
+      className={`bg-dark-2 rounded-card px-7.5 py-5 w-full flex flex-col gap-5 ${
+        isLoading ? loadingClass : ""
+      }`}
       onSubmit={handleSubmit}
     >
       {/* A failed lookup used to replace the whole form, leaving no way to add
           the city at all. Now it just means you type the name yourself. */}
       {geocodeStatus === "unavailable" && (
-        <p className={styles.notice}>
+        <p className="text-sm leading-normal text-dark-1 bg-brand-1 rounded-control px-3.5 py-2.5">
           Couldn&apos;t look up this location automatically — type the city name
           in yourself and it will save fine.
         </p>
       )}
 
-      <div className={styles.row}>
+      <div className={rowClass}>
         <label htmlFor="cityName">City name</label>
         <input
           id="cityName"
           onChange={(e) => setCityName(e.target.value)}
           value={cityName}
         />
-        <span className={styles.flag}>{emoji}</span>
+        <span className="absolute right-2.5 top-6.75 text-[2.8rem]">{emoji}</span>
       </div>
 
-      <div className={styles.row}>
+      <div className={rowClass}>
         <label htmlFor="date">When did you go to {cityName}?</label>
         {/* <input
           id="date"
@@ -126,10 +133,11 @@ function Form() {
           onChange={(date) => setDate(date)}
           selected={date}
           dateFormat="dd/MM/yyyy"
+          calendarClassName="font-[inherit]! text-[1.2rem]!"
         />
       </div>
 
-      <div className={styles.row}>
+      <div className={rowClass}>
         <label htmlFor="notes">Notes about your trip to {cityName}</label>
         <textarea
           id="notes"
@@ -138,7 +146,7 @@ function Form() {
         />
       </div>
 
-      <div className={styles.buttons}>
+      <div className="flex justify-between">
         <Button type="primary" nativeType="submit">
           Add
         </Button>

@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import styles from "./Map.module.css";
 import {
   MapContainer,
   TileLayer,
@@ -13,6 +12,24 @@ import { useCities } from "../contexts/CitiesContext";
 import { useGeolocation } from "../hooks/useGeolocation";
 import Button from "./Button";
 import { useUrlPosition } from "../hooks/useUrlPosition";
+// Leaflet renders the popup markup itself, so it is styled from the popup's
+// root. Leaflet's own CSS is unlayered, hence the `!` on every override.
+const popupClass = [
+  "[&_.leaflet-popup-content-wrapper]:bg-dark-1!",
+  "[&_.leaflet-popup-content-wrapper]:text-light-2!",
+  "[&_.leaflet-popup-content-wrapper]:rounded-control!",
+  "[&_.leaflet-popup-content-wrapper]:pr-1.5!",
+  "[&_.leaflet-popup-content-wrapper]:border-l-5!",
+  "[&_.leaflet-popup-content-wrapper]:border-l-brand-2!",
+  "[&_.leaflet-popup-content]:text-[1.5rem]!",
+  "[&_.leaflet-popup-content]:flex!",
+  "[&_.leaflet-popup-content]:items-center!",
+  "[&_.leaflet-popup-content]:gap-2.5!",
+  "[&_.leaflet-popup-content_span:first-child]:text-[2.5rem]!",
+  "[&_.leaflet-popup-content_span:first-child]:leading-none!",
+  "[&_.leaflet-popup-tip]:bg-dark-1!",
+].join(" ");
+
 function Map() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const { cities } = useCities();
@@ -35,7 +52,7 @@ function Map() {
     }
   }, [geolocationPosition]);
   return (
-    <div className={styles.mapContainer}>
+    <div className="flex-1 h-full bg-dark-2 relative tablet:flex-none tablet:h-[55vh] tablet:min-h-80 tablet:rounded-card tablet:overflow-hidden">
       {!geolocationPosition && (
         <Button
           type="position"
@@ -49,7 +66,7 @@ function Map() {
         center={mapPosition}
         zoom={6}
         scrollWheelZoom={true}
-        className={styles.map}
+        className="h-full"
       >
         {/* Main OSM tile servers — the previous .fr/hot mirror is rate-limited
             and often slow to paint, which is a bad look during a demo. */}
@@ -62,7 +79,7 @@ function Map() {
             position={[city.position.lat, city.position.lng]}
             key={city.id}
           >
-            <Popup>
+            <Popup className={popupClass}>
               <span>{city.emoji}</span>
               <span>{city.cityName}</span>
             </Popup>
